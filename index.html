@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OweSmart — Debt Coaching, Simplified</title>
+  <meta name="description" content="An elegant, single‑page startup website you can customise in minutes. Built with plain HTML/CSS/JS (no frameworks)." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1020;           /* deep navy */
+      --card:#11162b;         /* card navy */
+      --muted:#a7b0c0;        /* muted text */
+      --text:#eef2ff;         /* main text */
+      --brand:#7cdbd5;        /* teal */
+      --brand-2:#a7b6ff;      /* soft indigo */
+      --accent:#ffd580;       /* warm accent */
+      --ring: 0 0 0 4px rgba(124,219,213,.25);
+      --radius: var(--card-radius);
+      --shadow: 0 10px 30px rgba(0,0,0,var(--shadow-strength)), inset 0 1px 0 rgba(255,255,255,.03);
+      --max: 1120px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:radial-gradient(1200px 600px at 80% -10%,rgba(124,219,213,.15),transparent),
+               radial-gradient(1200px 600px at 10% 10%,rgba(167,182,255,.10),transparent),var(--bg);
+               color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--container-max);margin-inline:auto;padding:24px}
+    .btn{display:inline-flex;gap:10px;align-items:center;padding:12px 18px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand-2));
+         color:#071018;font-weight:700;box-shadow:var(--shadow);border:0;cursor:pointer;transition:.2s transform}
+    .btn:hover{transform:translateY(-2px)}
+    .btn.outline{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.12)}
+    header{position:sticky;top:0;backdrop-filter:saturate(160%) blur(12px);background:rgba(11,16,32,.6);z-index:50;border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:flex;align-items:center;justify-content:space-between}
+    .logo{display:flex;gap:10px;align-items:center;font-weight:800}
+    .logo-badge{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:var(--shadow)}
+    .menu{display:flex;gap:22px}
+    .menu a{color:var(--muted)}
+    .menu a:hover{color:var(--text)}
+    .mobile-toggle{display:none;background:none;border:0;color:var(--text);font-size:28px}
+
+    .hero{padding:72px 0}
+    .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:center}
+    .badge{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border:1px solid rgba(255,255,255,.12);border-radius:999px;color:var(--muted);font-size:12px}
+    h1{font-size:var(--hero-title);letter-spacing:-.02em;margin:14px 0 10px}
+    p.lead{color:var(--muted);font-size:18px;line-height:1.6;margin:0 0 22px}
+    .hero-card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);
+               border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+    .hero-metric{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+    .kpi{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:14px}
+    .kpi .big{font-weight:800;font-size:24px}
+    .kpi span{display:block;color:var(--muted);font-size:12px}
+
+    section{padding:var(--section-py) 0}
+    .section-title{font-size:28px;margin:0 0 16px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--grid-gap)}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    .icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:inline-grid;place-items:center;font-weight:800;color:#071018;margin-bottom:12px}
+
+    .features .list{display:grid;gap:10px}
+    .features .list li{display:flex;gap:10px;align-items:flex-start;color:var(--muted)}
+    .features .tick{width:20px;height:20px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:inline-grid;place-items:center;color:#071018;font-weight:900}
+
+    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--grid-gap)}
+    .price{display:flex;align-items:baseline;gap:6px;margin:10px 0 14px}
+    .price .amt{font-size:34px;font-weight:800}
+    .muted{color:var(--muted)}
+
+    .faq{max-width:860px;margin-inline:auto}
+    details{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:14px}
+    details+details{margin-top:10px}
+    summary{cursor:pointer;font-weight:600}
+    summary::-webkit-details-marker{display:none}
+
+    .cta{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:center}
+
+    footer{border-top:1px solid rgba(255,255,255,.08);padding:28px 0;color:var(--muted)}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid, .cta{grid-template-columns:1fr}
+      .grid-3, .pricing{grid-template-columns:1fr}
+      .menu{display:none}
+      .mobile-toggle{display:block}
+      .hero{padding-top:48px}
+      h1{font-size:38px}
+    }
+  </style>
+  <style>
+    /* === Pixel‑Tuner variables (easy knobs) === */
+    :root{
+      --container-max: 1120px;   /* width of main content */
+      --section-py: 72px;        /* vertical padding of sections */
+      --hero-title: 48px;        /* hero heading size */
+      --card-radius: 18px;       /* card corner radius */
+      --grid-gap: 18px;          /* gaps between grid items */
+      --shadow-strength: .25;    /* 0..1 shadow opacity */
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <a class="logo" href="#home" aria-label="OweSmart home">
+        <span class="logo-badge"></span>
+        <span>OweSmart</span>
+      </a>
+      <nav class="menu" id="menu">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="mobile-toggle" aria-label="Open menu" id="mobileBtn">☰</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero container" id="home">
+    <div class="hero-grid">
+      <div>
+        <span class="badge">✨ Debt coaching for Gen Z & SMEs</span>
+        <h1>Take control of your debt — one smart step at a time.</h1>
+        <p class="lead">See all your debt in one place, pick a strategy (Snowball or Avalanche), and get nudges that keep you on track. No jargon. No judgement.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap">
+          <a class="btn" href="#contact">Get early access</a>
+          <a class="btn outline" href="#features">See how it works</a>
+        </div>
+        <p class="muted" style="margin-top:10px">Free during beta • Cancel anytime</p>
+      </div>
+      <div class="hero-card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <strong>Demo snapshot</strong>
+          <span class="muted" style="font-size:12px">mock data</span>
+        </div>
+        <div class="hero-metric">
+          <div class="kpi">
+            <div class="big">RM 86,450</div>
+            <span>Total debt</span>
+          </div>
+          <div class="kpi">
+            <div class="big">13 months</div>
+            <span>Projected payoff</span>
+          </div>
+          <div class="kpi">
+            <div class="big">RM 4,120</div>
+            <span>Interest saved</span>
+          </div>
+          <div class="kpi">
+            <div class="big">+92%</div>
+            <span>Stick‑to‑plan score</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust logos (optional) -->
+  <section>
+    <div class="container" style="opacity:.9">
+      <div class="grid-3">
+        <div class="card" style="text-align:center">Featured in <strong>Fintech Today</strong></div>
+        <div class="card" style="text-align:center">Backed by <strong>Uni Accelerator</strong></div>
+        <div class="card" style="text-align:center">Trusted by <strong>1,200+ users</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="container">
+      <h2 class="section-title">Why OweSmart?</h2>
+      <div class="grid-3">
+        <div class="card">
+          <div class="icon">①</div>
+          <h3>Connect & See Everything</h3>
+          <p class="muted">Securely link bank/credit accounts, import statements, or just start with a simple spreadsheet.</p>
+        </div>
+        <div class="card">
+          <div class="icon">②</div>
+          <h3>Pick Your Strategy</h3>
+          <p class="muted">Choose <strong>Snowball</strong> (quick wins) or <strong>Avalanche</strong> (lowest interest first) — we simulate both.</p>
+        </div>
+        <div class="card">
+          <div class="icon">③</div>
+          <h3>Stay on Track</h3>
+          <p class="muted">Smart reminders, habit loops, and streaks that actually feel good to follow.</p>
+        </div>
+      </div>
+
+      <div class="features card" style="margin-top:18px">
+        <ul class="list">
+          <li><span class="tick">✓</span> Privacy first — your data is encrypted and under your control.</li>
+          <li><span class="tick">✓</span> Works with Malaysian context (EPF, PTPTN, CCRIS/CTOS, ringgit).</li>
+          <li><span class="tick">✓</span> Export to CSV/Excel • No lock‑in • Mobile‑friendly.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social proof / Testimonials -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">What early users say</h2>
+      <div class="grid-3">
+        <div class="card"><em>“I finally see a finish line.”</em><br><span class="muted">— Aisha, fresh grad</span></div>
+        <div class="card"><em>“Snowball kept me motivated; I paid off 2 cards.”</em><br><span class="muted">— Chen, SME owner</span></div>
+        <div class="card"><em>“The nudges feel like a friend, not a lecture.”</em><br><span class="muted">— Raj, junior analyst</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing">
+    <div class="container">
+      <h2 class="section-title">Simple pricing</h2>
+      <div class="pricing">
+        <div class="card">
+          <h3>Starter</h3>
+          <div class="price"><span class="amt">RM0</span><span class="muted">/mo</span></div>
+          <p class="muted">Track up to 3 debts • Basic tips • Email reminders</p>
+          <a class="btn" href="#contact">Start free</a>
+        </div>
+        <div class="card" style="outline:2px solid rgba(124,219,213,.35)">
+          <h3>Pro</h3>
+          <div class="price"><span class="amt">RM19</span><span class="muted">/mo</span></div>
+          <p class="muted">Unlimited debts • Strategy simulator • WhatsApp nudges • Export</p>
+          <a class="btn" href="#contact">Go Pro</a>
+        </div>
+        <div class="card">
+          <h3>Team</h3>
+          <div class="price"><span class="amt">RM99</span><span class="muted">/mo</span></div>
+          <p class="muted">Up to 5 team members • Admin dashboard • Priority support</p>
+          <a class="btn" href="#contact">Talk to sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container faq">
+      <h2 class="section-title">Frequently asked questions</h2>
+      <details>
+        <summary>Is my data safe?</summary>
+        <p class="muted">Yes. We use bank‑grade encryption at rest and in transit. You can export/delete your data anytime.</p>
+      </details>
+      <details>
+        <summary>Snowball vs Avalanche — which is better?</summary>
+        <p class="muted">Avalanche minimises interest. Snowball delivers faster wins. We show both and let you choose.</p>
+      </details>
+      <details>
+        <summary>Do you connect to Malaysian banks?</summary>
+        <p class="muted">We support CSV imports now and are exploring open‑banking integrations. Join the beta for updates.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="container cta card">
+      <div>
+        <h2 class="section-title">Ready to see your debt disappear on a timeline?</h2>
+        <p class="muted">Join the beta and get a personalised payoff plan in under 2 minutes.</p>
+      </div>
+      <div>
+        <a class="btn" href="#contact">Get early access</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Let’s talk</h2>
+      <form class="card" id="contactForm" onsubmit="return handleSubmit(event)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <label>Full Name<br><input required name="name" class="input" placeholder="e.g. Aiman Zulkifli"></label>
+          <label>Email<br><input required type="email" name="email" class="input" placeholder="name@email.com"></label>
+        </div>
+        <label style="display:block;margin-top:12px">Message<br>
+          <textarea required name="msg" class="input" rows="4" placeholder="Tell us about your goals…"></textarea>
+        </label>
+        <div style="display:flex;gap:10px;align-items:center;margin-top:12px">
+          <button class="btn" type="submit">Request access</button>
+          <span class="muted" id="formNote">We reply within 24 hours.</span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div>© <span id="year"></span> OweSmart Sdn Bhd. All rights reserved.</div>
+      <div><a class="muted" href="#">Privacy</a> • <a class="muted" href="#">Terms</a></div>
+    </div>
+  </footer>
+
+  <style>
+    /* Inputs at bottom so they inherit variables above */
+    .input{width:100%;margin-top:6px;padding:12px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.02);color:var(--text);outline:none}
+    .input:focus{box-shadow:var(--ring);border-color:transparent}
+    label{font-weight:600}
+  </style>
+
+  <script>
+    // Mobile menu toggle
+    const mobileBtn = document.getElementById('mobileBtn');
+    const menu = document.getElementById('menu');
+    mobileBtn?.addEventListener('click',()=>{
+      const open = getComputedStyle(menu).display !== 'none';
+      menu.style.display = open ? 'none' : 'flex';
+    });
+
+    // Contact form (demo only)
+    function handleSubmit(e){
+      e.preventDefault();
+      const form = e.target;
+      const data = Object.fromEntries(new FormData(form).entries());
+      const note = document.getElementById('formNote');
+      note.textContent = 'Thanks, '+data.name+'! We\'ll email you at '+data.email+' shortly.';
+      form.reset();
+      return false;
+    }
+
+    // Year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <!-- Pixel‑Tuner Panel (toggleable) -->
+  <button id="tunerToggle" style="position:fixed;right:16px;bottom:16px;border:0;border-radius:999px;padding:10px 14px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:var(--shadow)">Tune</button>
+  <div id="tuner" style="position:fixed;right:16px;bottom:64px;width:280px;background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:12px;display:none;box-shadow:var(--shadow)">
+    <div style="font-weight:800;margin-bottom:8px">Design Tuner</div>
+    <label class="muted">Container (px)
+      <input type="range" min="880" max="1440" value="1120" data-var="--container-max" step="10" style="width:100%">
+    </label>
+    <label class="muted">Section spacing (px)
+      <input type="range" min="40" max="160" value="72" data-var="--section-py" step="2" style="width:100%">
+    </label>
+    <label class="muted">Hero title (px)
+      <input type="range" min="28" max="72" value="48" data-var="--hero-title" step="1" style="width:100%">
+    </label>
+    <label class="muted">Card radius (px)
+      <input type="range" min="8" max="36" value="18" data-var="--card-radius" step="1" style="width:100%">
+    </label>
+    <label class="muted">Grid gap (px)
+      <input type="range" min="8" max="36" value="18" data-var="--grid-gap" step="1" style="width:100%">
+    </label>
+    <label class="muted">Shadow strength
+      <input type="range" min="0" max="1" value="0.25" data-var="--shadow-strength" step="0.05" style="width:100%">
+    </label>
+  </div>
+
+  <script>
+    // Pixel‑Tuner interactions
+    const $ = s => document.querySelector(s);
+    $('#tunerToggle').addEventListener('click',()=>{
+      const el = $('#tuner');
+      el.style.display = el.style.display==='none'||!el.style.display ? 'block' : 'none';
+    });
+    $('#tuner').addEventListener('input', e => {
+      const target = e.target;
+      const v = target.value + (target.dataset.var.includes('px') ? 'px' : '');
+      document.documentElement.style.setProperty(target.dataset.var, v);
+    });
+  </script>
+</body>
+</html>
